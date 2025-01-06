@@ -1,13 +1,12 @@
 "use client";
-import { signUpUser } from '@/store/action/auth';
+import { signInUser } from '@/store/action/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const SignUpForm = () => {
+const LogInForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
     password: '',
   });
@@ -23,7 +22,7 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await dispatch(signUpUser(formData));
+    const res = await dispatch(signInUser(formData));
     const { errors, status } = res?.payload || {};
 
     if (status === 1) {
@@ -48,27 +47,13 @@ const SignUpForm = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="flex flex-col items-center justify-center p-8 bg-white shadow-lg rounded-lg max-w-sm w-full">
-        <h1 className="text-2xl font-bold text-center mb-6">Sign Up</h1>
+        <h1 className="text-2xl font-bold text-center mb-6">Sign In</h1>
 
         
         
 
         <form onSubmit={handleSubmit} className="w-full">
-          <div className="mb-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              className={`bg-gray-50 border ${
-                getErrorMessage('name') ? 'border-red-500' : 'border-gray-300'
-              } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
-            />
-            {getErrorMessage('name') && (
-              <p className="text-red-500 text-sm mt-1">{getErrorMessage('name')}</p>
-            )}
-          </div>
+          
           <div className="mb-4">
             <input
               type="email"
@@ -105,7 +90,7 @@ const SignUpForm = () => {
               disabled={loading}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5"
             >
-              {loading ? 'Signing Up...' : 'Sign Up'}
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </div>
         </form>
@@ -113,10 +98,11 @@ const SignUpForm = () => {
         {getGeneralError() && (
           <p className="text-red-500 text-center mb-4">{getGeneralError()}</p>
         )}
-        <Link href='/login'>Already have an account?</Link>
+        <Link href='/signup'>Dont have an account?</Link>
+        <a></a>
       </div>
     </div>
   );
 };
 
-export default SignUpForm;
+export default LogInForm;

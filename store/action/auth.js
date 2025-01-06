@@ -10,8 +10,21 @@ export const signUpUser = createAsyncThunk(
     try {
       const response = await axios.post(API_URL, userData);
       response.data.status==1 && dispatch(addUser(response.data.user));
-      // Return only the user data from the API response
-      return response.data; // Ensure you return only the user data, not the token
+
+      return response.data; 
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const signInUser = createAsyncThunk(
+  'auth/signInUser',
+  async (userData, {dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth', userData);
+      response.data.status==1 && dispatch(addUser(response.data.user));
+      return response.data; 
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

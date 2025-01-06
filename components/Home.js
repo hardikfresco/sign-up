@@ -5,6 +5,8 @@ import { cart } from "@/store/slice/cartSlice";
 import { useDispatch, useSelector } from 'react-redux';
 
 const HomeComponent = () => {
+    const {user} = useSelector(state => state.auth)
+    
     const {counter} = useSelector(state => state.cart)
     const dispatch = useDispatch();
     const handleAddToCart = ()=>{
@@ -45,6 +47,9 @@ const HomeComponent = () => {
           {/* Details Section */}
           <div className="p-6 md:w-1/2 flex flex-col justify-between">
             <div>
+              <p className="text-2xl font-bold text-gray-800 mb-4">
+                {user?.name?`welcome ${user.name} !`:'please login'}
+              </p>
               <p className="text-2xl font-bold text-gray-800 mb-4">
                 Price: $40
               </p>
